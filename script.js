@@ -42,7 +42,18 @@ document.getElementById('lost-found-form').addEventListener('submit', function (
     document.getElementById('item').value = '';
     document.getElementById('contact').value = '';
 });
+document.querySelector('.theme-toggle').addEventListener('click', function () {
+    // Get the current theme from the root element
+    const currentTheme = document.documentElement.getAttribute('data-theme');
 
+    // Toggle between light and dark
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+
+    // Change icon based on the theme
+    const icon = newTheme === 'light' ? 'fa-moon' : 'fa-sun';
+    this.innerHTML = `<i class="fas ${icon}"></i>`;
+});
 function searchRoutes() {
     // Get the search query
     let input = document.getElementById('search-bar').value.toLowerCase();
@@ -85,6 +96,7 @@ document.getElementById('add-crew-form').addEventListener('submit', function (e)
     document.getElementById('crew-role').value = '';
     document.getElementById('crew-bus-number').value = '';
 });
+
 
 // Event delegation for removing crew members
 document.querySelector('#crew-list tbody').addEventListener('click', function (e) {
@@ -132,7 +144,14 @@ document.getElementById('feedback-form').addEventListener('submit', function (e)
     document.getElementById('user-name').value = '';
     document.getElementById('feedback-message').value = '';
 });
+window.onload=function(){
+    const userPreference = window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', userPreference);
 
+    // Update toggle button icon based on default theme
+    const icon = userPreference === 'light' ? 'fa-moon' : 'fa-sun';
+    document.querySelector('.theme-toggle').innerHTML = `<i class="fas ${icon}"></i>`;
+}
 
 window.onscroll = function() {
     if (document.documentElement.scrollTop > 200) {
@@ -141,6 +160,7 @@ window.onscroll = function() {
         document.getElementById('back-to-top').style.display = 'none';
     }
 };
+
 function toggleRoutes() {
     const routesList = document.getElementById('bus-routes-list');
     if (routesList.style.display === 'none') {
